@@ -2,6 +2,7 @@ package entity;
 
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "ticket")
@@ -13,14 +14,15 @@ public class Ticket {
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime created_at;
-    @ManyToOne
-    @JoinColumn(name = "client_id")
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
-    @ManyToOne
-    @JoinColumn(name = "from_planet_id")
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "from_planet_id", nullable = false)
     private Planet fromPlanet;
-    @ManyToOne
-    @JoinColumn(name = "to_planet_id")
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "to_planet_id", nullable = false)
     private Planet toPlanet;
 
     public Long getId() {

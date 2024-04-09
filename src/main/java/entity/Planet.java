@@ -3,16 +3,21 @@ package entity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-    @Table(name = "planet")
+import java.util.Set;
+
+@Table(name = "planet")
     @Entity
     public class Planet {
         @Id
         private String id;
         @Column
         private String name;
-        @OneToMany(mappedBy = "planet", cascade = CascadeType.ALL)
-        private List<Ticket> tickets = new ArrayList<>();
+        @OneToMany(mappedBy = "fromPlanet", cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<Ticket> fromPlanet = new ArrayList<>();
+        @OneToMany(mappedBy = "toPlanet", cascade = CascadeType.ALL, orphanRemoval = true)
+        private Set<Ticket> toPlanet = new HashSet<>();
 
         public String getId() {
             return id;

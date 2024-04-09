@@ -5,10 +5,11 @@ import services.ClientCrudService;
 import services.PlanetCrudService;
 import services.TicketCrudService;
 
+
 public class Main {
     public static void main(String[] args) {
         TicketCrudService ticketService = new TicketCrudService();
-        ticketService.createTicket(prepareTicket(4L, "PLU", "SAT"));
+        ticketService.createTicket(prepareTicket(6L, "PLU", "SAT"));
     }
 
     private static Client prepareClient(String name) {
@@ -55,6 +56,12 @@ public class Main {
         } else {
             throw new IllegalArgumentException("One or more entities were not found.");
         }
+        return ticket;
+    }
+
+    private static Ticket ticketToDelete(Long ticketId, Long clientId, String fromPlanet, String toPlanet) {
+        Ticket ticket = prepareTicket(clientId, fromPlanet, toPlanet);
+        ticket.setId(ticketId);
         return ticket;
     }
 }
